@@ -1,0 +1,13 @@
+<h1>Editing {{.Title}}</h1>
+
+<form action="/save/{{htmlEscape .Title}}" method="POST">
+    <table>
+        <tr><td>order number</td><td><input name="orderNumber" value="{{.OrderNumber}}" readonly="true"></td></tr>
+        <tr><td>productId</td><td><input name="productId" value="{{.ProductId}}"></td></tr>
+        <tr><td>productDescription</td><td><input name="productDescription" value="{{.ProductDescription}}"></td></tr>
+        <tr><td>faceValue</td><td><input name="faceValue" value="{{.FaceValue}}"></td></tr>
+        <tr><td>toEmail</td><td><input name="toEmail" value="{{.ToEmail}}"></td></tr>
+        <tr><td>eGiftURL</td><td><input name="eGiftURL" value="{{.EGiftURL}}" readonly="true"></td></tr>
+        <tr><td><input type="submit" value="Save"></td></tr>
+    </table>
+</form>

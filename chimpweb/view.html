@@ -1,0 +1,12 @@
+<h1>{{.Title}}</h1>
+
+<p>[<a href="/edit/{{htmlEscape .Title}}">edit</a>]</p>
+
+<table>
+    <tr><td>Order Number</td><td>{{ .OrderNumber}}</td></tr>
+    <tr><td>Product Id</td><td>{{ .ProductId}}</td></tr>
+    <tr><td>Product Description</td><td>{{ .ProductDescription}}</td></tr>
+    <tr><td>Face Value</td><td>{{ .FaceValue}}</td></tr>
+    <tr><td>Recipient email</td><td>{{ .ToEmail}}</td></tr>
+    <tr><td>eGift URL</td><td>{{ .EGiftURL}}</td></tr>
+</table>
