@@ -1,0 +1,275 @@
++----------------------------------------------------------------------------+
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|            hawk heads hack                                                 |
+|            ---- ----- ----                                                 |
+|                                                                            |
+|                                                                            |
+|                  2015 bhn code hackathon                                   |
+|                  =======================                                   |
+|                                                                            |
+|                       radhika pathani                                      |
+|                                                  rahul dabas               |
+|                                                                            |
+|              mukesh jyothi                                                 |
+|                                    doug busley                             |
+|                                                                            |
+|                                                   craig thomas             |
+|                                                                            |
++----------------------------------------------------------------------------+
++----------------------------------------------------------------------------+
+|  transactional email                                                       |
+|                                                                            |
+|  not so easy today                                                         |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                               what do you mean "not so easy?"              |
+|                              all you do is just create an XML template     |
+|                               with your favorite editor, and then you      |
+|                            just create an XSLT script to merge the data    |
+|                              into your message, and then you just go to    |
+|                                gcmadmin and you paste the XML into one     |
+|                                 field and the XSLT into another field.     |
+|                              and you're good to go. unless there's a       |
+|                                   bug in your XSLT or you need to add      |
+|                                something to your XML. then you just        |
+|                                         start over.                        |
+|                                                                            |
+|                                                                            |
+|                                                                            |
++----------------------------------------------------------------------------+
++----------------------------------------------------------------------------+
+|                                                                            |
+|  email is simple, right?                                                   |
+|  why else would Amazon call it                                             |
+|      "Simple Email Service"          In the Verify a New Domain dialog box,|
+|                                          you will see a Domain Verification|
+|                                       Record Set containing a Name, a Type,|
+|                                         and a Value. (This information will|
+|                                           also be available by clicking the|
+|                                      domain name after you close the dialog|
+|                                                                       box.)|
+|                                                                            |
+|                                      To complete domain verification, add a|
+|                                TXT record with the displayed Name and Value|
+|                                to your domain's DNS server. For information|
+|                                    about Amazon SES TXT records and general|
+|                                   guidance about how to add a TXT record to|
+|                                         a DNS server, see Amazon SES Domain|
+|                                    Verification TXT Records. In particular:|
+|                             If your DNS provider does not allow underscores|
+|                     in record names, you can omit _amazonses from the Name.|
+|                                                                            |
+|                                     To help you easily identify this record|
+|                                  within your domain's DNS settings, you can|
+|                                 optionally prefix the Value with amazonses:|
+|                                                                            |
+|                                     Some DNS providers automatically append|
+|                               the domain name to DNS record names. To avoid|
+|                               duplication of the domain name, you can add a|
+|                             period to the end of the domain name in the DNS|
+|                              record. This indicates that the record name is|
+|                                   fully qualified and the DNS provider need|
+|                                       not append an additional domain name.|
+|                                                                            |
++----------------------------------------------------------------------------+
++----------------------------------------------------------------------------+
+|                                                                            |
+|   well, that was easy - right.                                             |
+|   but how do i do templates for                                            |
+|   my email?                                                                |
+|                                                                            |
+|   oh. right. templates aren't simple                                       |
+|   so they're not part of AWS SES.                                          |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
++----------------------------------------------------------------------------+
++----------------------------------------------------------------------------+
+| you know, a template                                                       |
+|                          +                                                +|
+|                            hey, ${card-recipient}, something great just    |
+|                            came your way. you just got an egift from       |
+|                            ${card-purchaser}.                              |
+|                                                                            |
+|                            here's everything you need to get your new      |
+|                            gift. easy. just click this link.               |
+|                               ${egift-url}                                 |
+|                                                                            |
+|                            when you view your gift you will also see the   |
+|                            ways you can use your gift.                     |
+|                                                                            |
+|                            you can use some gifts on line, some gifts from |
+|                            your phone, and some gifts by printing them and |
+|                            taking them to the store.                       |
+|                                                                            |
+|                            there are other things you can do with your     |
+|                            gift, too. take a look.                         |
+|                                                                            |
+|                            we are thrilled that you got this gift.         |
+|                            call us at 1-800-GIFTCARD if we can help.       |
++--------------------------+-------------------------------------------------+
++----------------------------------------------------------------------------+
+| so here's the hack                                                         |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|         we have a web app that takes (cough) orders for egift cards        |
+|                                                                            |
+|           and it sends a transactional email to the recipient using        |
+|                                                                            |
+|             a template.                                                    |
+|                                                                            |
+|                                                                            |
+|                    (demo)                                                  |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
++----------------------------------------------------------------------------+
++----------------------------------------------------------------------------+
+| here's the template editor                                                 |
+|                                                                            |
+|                                                                            |
+|        (no, we didn't write this)                                          |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                 (demo)                                     |
+|                                                                            |
+|                                                                            |
+|                                                                            |
++----------------------------------------------------------------------------+
++----------------------------------------------------------------------------+
+| here's the template engine and                                             |
+|    transactional email service                                             |
+|                                                                            |
+|        (no, we didn't write this either)                                   |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                 (demo)                                     |
+|                                                                            |
+|                                                                            |
+|                                                                            |
++----------------------------------------------------------------------------+
++----------------------------------------------------------------------------+
+| here's the API we call                                                     |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|       (no, we didn't write that either)                                    |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                               (demo)                                       |
+|                                                                            |
+|                                                                            |
+|                                                                            |
++----------------------------------------------------------------------------+
++----------------------------------------------------------------------------+
+| here's the code we wrote                                                   |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|        (yes, we really wrote this stuff)                                   |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                             (code)                                         |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
++----------------------------------------------------------------------------+
++----------------------------------------------------------------------------+
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|       thanks                                                               |
+|                                                                            |
+|           and much respect to you all                                      |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|       yours truly,                                                         |
+|                                                                            |
+|            hawk heads                                                      |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
+|                                                                            |
++----------------------------------------------------------------------------+
