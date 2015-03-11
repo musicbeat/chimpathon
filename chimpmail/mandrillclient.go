@@ -14,8 +14,8 @@ import (
 )
 
 type TemplateInfoRequest struct {
-	ApiKey       string
-	TemplateName string
+	ApiKey       string `json:"key"`
+	TemplateName string `json:"name"`
 }
 type TemplateInfo struct {
 	Slug             string
@@ -47,7 +47,9 @@ func GetTemplateInfo() (err error) {
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
-	log.Printf("body: %#v\n", body)
+	if err != nil {
+		log.Fatal(err)
+	}
 	var templateInfo TemplateInfo
 	err = json.Unmarshal(body, &templateInfo)
 	if err != nil {
