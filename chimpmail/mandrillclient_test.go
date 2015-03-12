@@ -11,6 +11,6 @@ import (
 
 func TestGetTemplateInfo(t *testing.T) {
 	fmt.Println("Test: GetTemplateInfo")
-	err := GetTemplateInfo()
+	err := SendTemplate()
 	fmt.Printf("err: %#v\n", err)
 }
