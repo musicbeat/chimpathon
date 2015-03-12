@@ -11,6 +11,6 @@ import (
 
 func TestGetTemplateInfo(t *testing.T) {
 	fmt.Println("Test: GetTemplateInfo")
-	err := SendTemplate("Happy Birthday!", "123456789", "rahul.dabas@bhnetwork.com", "Darden")
+	err := SendTemplate("Happy Birthday!", "123456789", "craig.thomas@bhnetwork.com", "Darden")
 	fmt.Printf("err: %#v\n", err)
 }

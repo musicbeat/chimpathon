@@ -13,45 +13,45 @@ import (
 )
 
 type GlobalMergeVars struct {
-	Name 			string `json:"name"`
-	Content			string `json:"content"`
+	Name    string `json:"name"`
+	Content string `json:"content"`
 }
 
 type To struct {
-	Email 			string `json:"email"`
-	Name 			string `json:"name"`
+	Email string `json:"email"`
+	Name  string `json:"name"`
 }
 
 type Message struct {
-	Subject 		string `json:"subject"`
-	From_email 		string `json:"from_email"`
-	To 				[]To `json:"to"`
-	Important 		bool	`json:"important"`
-	Global_merge_vars []GlobalMergeVars `json:"global_merge_vars"`
+	Subject         string            `json:"subject"`
+	FromEmail       string            `json:"from_email"`
+	To              []To              `json:"to"`
+	Important       bool              `json:"important"`
+	GlobalMergeVars []GlobalMergeVars `json:"global_merge_vars"`
 }
 
 type SendTemplateRequest struct {
-	Key 			string `json:"key"`
-        Template_name 		string `json:"template_name"`
-	Message 		Message `json:"message"`
-        Template_content	[]GlobalMergeVars	`json:"template_content"`
+	Key             string            `json:"key"`
+	TemplateName    string            `json:"template_name"`
+	Message         Message           `json:"message"`
+	TemplateContent []GlobalMergeVars `json:"template_content"`
 }
 
 func SendTemplate(senderMessage string, eGiftId string, toEmail string, partner string) (err error) {
 	g := make([]GlobalMergeVars, 3)
 
 	g[0] = GlobalMergeVars{
-		Name: "SENDER_MESSAGE",
+		Name:    "SENDER_MESSAGE",
 		Content: senderMessage,
 	}
 
 	g[1] = GlobalMergeVars{
-		Name: "EGIFT_ID",
+		Name:    "EGIFT_ID",
 		Content: eGiftId,
 	}
 
 	g[2] = GlobalMergeVars{
-		Name: "PARTNER",
+		Name:    "PARTNER",
 		Content: partner,
 	}
 
@@ -59,36 +59,36 @@ func SendTemplate(senderMessage string, eGiftId string, toEmail string, partner 
 
 	t[0] = To{
 		Email: toEmail,
-		Name: toEmail,
+		Name:  toEmail,
 	}
 
 	t[1] = To{
 		Email: "rdabas@nexient.com",
-		Name: "Rahul Dabas",
+		Name:  "Rahul Dabas",
 	}
 
 	t[2] = To{
 		Email: "dougbusley@gmail.com",
-		Name: "Doug Busley",
+		Name:  "Doug Busley",
 	}
 
 	m := Message{
-		Subject: senderMessage,
-		From_email: "craig.thomas@bhnetwork.com",
-		To:t,
-		Important: true,
-		Global_merge_vars: g,
+		Subject:         senderMessage,
+		FromEmail:       "craig.thomas@bhnetwork.com",
+		To:              t,
+		Important:       true,
+		GlobalMergeVars: g,
 	}
 
 	r := SendTemplateRequest{
-		Key: "53yx5-nHBEYqKlyf8zfk8g", 
-		Message:m,
-		Template_name:"transactional-notification",
+		Key:          "53yx5-nHBEYqKlyf8zfk8g",
+		Message:      m,
+		TemplateName: "transactional-notification",
 	}
 	log.Print(r)
 
 	buf, err := json.Marshal(r)
-	
+
 	if err != nil {
 		log.Fatal(err)
 	}
