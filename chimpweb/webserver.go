@@ -14,6 +14,7 @@ import (
 	"net"
 	"net/http"
 	"regexp"
+	"github.com/musicbeat/chimpathon/chimpmail"
 )
 
 var (
@@ -27,17 +28,24 @@ type Order struct {
 	ProductDescription string
 	FaceValue          string
 	ToEmail            string
-	EGiftURL           string
+	EGiftId           string
 }
 
 func (o *Order) save() error {
-	// do something to email the order
 	// save the order
 	filename := o.Title + ".txt"
 	j, err := json.MarshalIndent(o, "", "  ")
 	if err != nil {
 		log.Fatal(err)
 	}
+	// do something to email the order
+
+	err = chimpmail.SendTemplate("Happy Birthday", o.EGiftId, o.ToEmail, "Darden")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	return ioutil.WriteFile(filename, j, 0600)
 }
 
@@ -68,8 +76,8 @@ func editHandler(w http.ResponseWriter, r *http.Request, title string) {
 	o, err := loadOrder(title)
 	if err != nil {
 		uuid := template.HTMLEscapeString(uuid.NewRandom().String())
-		eGiftURL := "https://egift.io/" + uuid
-		o = &Order{Title: uuid, OrderNumber: uuid, EGiftURL: eGiftURL}
+		eGiftId := "https://egift.io/" + uuid
+		o = &Order{Title: uuid, OrderNumber: uuid, EGiftId: eGiftId}
 	}
 	renderTemplate(w, "edit", o)
 }
@@ -80,7 +88,7 @@ func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
 	productDescription := r.FormValue("productDescription")
 	faceValue := r.FormValue("faceValue")
 	toEmail := r.FormValue("toEmail")
-	eGiftURL := r.FormValue("eGiftURL")
+	eGiftId := r.FormValue("eGiftId")
 	o := &Order{
         Title: title, 
         OrderNumber: orderNumber,
@@ -88,7 +96,7 @@ func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
         ProductDescription: productDescription,
         FaceValue: faceValue,
         ToEmail: toEmail,
-        EGiftURL: eGiftURL}
+        EGiftId: eGiftId}
 	err := o.save()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

@@ -13,81 +13,86 @@ import (
 )
 
 type GlobalMergeVars struct {
-	name 			string
-	content			string
+	Name 			string `json:"name"`
+	Content			string `json:"content"`
 }
 
 type To struct {
-	email 			string
-	name 			string
+	Email 			string `json:"email"`
+	Name 			string `json:"name"`
 }
 
 type Message struct {
-	subject 		string
-	from_email 		string
-	to 				[]To
-	important 		bool
-	global_merge_vars []GlobalMergeVars
+	Subject 		string `json:"subject"`
+	From_email 		string `json:"from_email"`
+	To 				[]To `json:"to"`
+	Important 		bool	`json:"important"`
+	Global_merge_vars []GlobalMergeVars `json:"global_merge_vars"`
 }
 
 type SendTemplateRequest struct {
-	key 			string
-	message 		Message
-	send_at			string
+	Key 			string `json:"key"`
+        Template_name 		string `json:"template_name"`
+	Message 		Message `json:"message"`
+        Template_content	[]GlobalMergeVars	`json:"template_content"`
 }
 
-func SendTemplate() (err error) {
+func SendTemplate(senderMessage string, eGiftId string, toEmail string, partner string) (err error) {
 	g := make([]GlobalMergeVars, 3)
 
 	g[0] = GlobalMergeVars{
-		name: "SENDER_MESSAGE",
-		content: "Happy Birthday",
+		Name: "SENDER_MESSAGE",
+		Content: senderMessage,
 	}
 
 	g[1] = GlobalMergeVars{
-		name: "EGIFT_ID",
-		content: "https://www.google.com",
+		Name: "EGIFT_ID",
+		Content: eGiftId,
 	}
 
 	g[2] = GlobalMergeVars{
-		name: "PARTNER",
-		content: "GCM",
+		Name: "PARTNER",
+		Content: partner,
 	}
 
 	t := make([]To, 3)
 
 	t[0] = To{
-		email: "rahul.dabas@bhnetwork.com",
-		name: "Rahul Dabas",
+		Email: toEmail,
+		Name: toEmail,
 	}
 
 	t[1] = To{
-		email: "rdabas@nexient.com",
-		name: "Rahul Dabas",
+		Email: "rdabas@nexient.com",
+		Name: "Rahul Dabas",
 	}
 
 	t[2] = To{
-		email: "dougbusley@gmail.com",
-		name: "Doug Busley",
+		Email: "dougbusley@gmail.com",
+		Name: "Doug Busley",
 	}
 
 	m := Message{
-		subject: "Subject",
-		from_email: "craig.thomas@bhnetwork.com",
-		to:t,
-		important: true,
-		global_merge_vars: g,
+		Subject: senderMessage,
+		From_email: "craig.thomas@bhnetwork.com",
+		To:t,
+		Important: true,
+		Global_merge_vars: g,
 	}
 
 	r := SendTemplateRequest{
-		key: "53yx5-nHBEYqKlyf8zfk8g", 
-		message:m,
-		send_at:"2015-03-10T12:00:00",
+		Key: "53yx5-nHBEYqKlyf8zfk8g", 
+		Message:m,
+		Template_name:"transactional-notification",
 	}
 	log.Print(r)
 
 	buf, err := json.Marshal(r)
 	
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Print(string(buf))
 
 	b := bytes.NewBuffer(buf)
 	resp, err := http.Post("https://mandrillapp.com/api/1.0/messages/send-template.json", "text/json", b)
