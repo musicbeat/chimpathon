@@ -76,7 +76,7 @@ func editHandler(w http.ResponseWriter, r *http.Request, title string) {
 	o, err := loadOrder(title)
 	if err != nil {
 		uuid := template.HTMLEscapeString(uuid.NewRandom().String())
-		eGiftId := "https://egift.io/" + uuid
+		eGiftId := uuid
 		o = &Order{Title: uuid, OrderNumber: uuid, EGiftId: eGiftId}
 	}
 	renderTemplate(w, "edit", o)
