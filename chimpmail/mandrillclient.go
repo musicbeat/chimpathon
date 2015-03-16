@@ -81,7 +81,7 @@ func SendTemplate(senderMessage string, eGiftId string, toEmail string, partner 
 	}
 
 	r := SendTemplateRequest{
-		Key:          "53yx5-nHBEYqKlyf8zfk8g",
+		Key:          "put-your-own-key-here",
 		Message:      m,
 		TemplateName: "transactional-notification",
 	}
